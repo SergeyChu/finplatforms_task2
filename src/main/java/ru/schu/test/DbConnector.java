@@ -13,13 +13,17 @@ public class DbConnector {
     private static final String SCHEMA_NAME = "task2";
     private static volatile Connection connection;
 
-    public static Connection getConnection() throws SQLException {
+    public static Connection getConnection() {
         if (connection == null) {
             synchronized (DbConnector.class) {
                 Path currentPath = Paths.get("");
-                DriverManager.registerDriver(new JDBC());
-                String connString = "jdbc:sqlite:" + currentPath.toAbsolutePath().toString() + File.separator + SCHEMA_NAME +".db";
-                connection = DriverManager.getConnection(connString);
+                try {
+                    DriverManager.registerDriver(new JDBC());
+                    String connString = "jdbc:sqlite:" + currentPath.toAbsolutePath().toString() + File.separator + SCHEMA_NAME + ".db";
+                    connection = DriverManager.getConnection(connString);
+                } catch (SQLException e) {
+                    throw new IllegalStateException("Unable to establish connection: " + e.getMessage(), e);
+                }
             }
         }
 
