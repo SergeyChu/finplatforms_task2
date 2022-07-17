@@ -1,6 +1,6 @@
 package ru.schu.test;
 
-import ru.schu.test.enums.Command;
+import ru.schu.test.enums.Commands;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,21 +12,21 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Task2 {
-    private static final Map<String, Command> commands = new LinkedHashMap<>();
+    private static final Map<String, Commands> commands = new LinkedHashMap<>();
 
     public static void main(String... args) throws SQLException, IOException {
-        commands.put("l", Command.SHOW_ALL);
-        commands.put("list", Command.SHOW_ALL);
-        commands.put("listall", Command.SHOW_ALL);
-        commands.put("a", Command.ADD_NEW);
-        commands.put("add", Command.ADD_NEW);
-        commands.put("addnew", Command.ADD_NEW);
-        commands.put("d", Command.DELETE_BY_ID);
-        commands.put("del", Command.DELETE_BY_ID);
-        commands.put("delbyid", Command.DELETE_BY_ID);
-        commands.put("q", Command.EXIT);
-        commands.put("quit", Command.EXIT);
-        commands.put("exit", Command.EXIT);
+        commands.put("l", Commands.SHOW_ALL);
+        commands.put("list", Commands.SHOW_ALL);
+        commands.put("listall", Commands.SHOW_ALL);
+        commands.put("a", Commands.ADD_NEW);
+        commands.put("add", Commands.ADD_NEW);
+        commands.put("addnew", Commands.ADD_NEW);
+        commands.put("d", Commands.DELETE_BY_ID);
+        commands.put("del", Commands.DELETE_BY_ID);
+        commands.put("delbyid", Commands.DELETE_BY_ID);
+        commands.put("q", Commands.EXIT);
+        commands.put("quit", Commands.EXIT);
+        commands.put("exit", Commands.EXIT);
 
 
         StudentsDao studentsDao = new StudentsDao(DbConnector.getConnection());
@@ -62,7 +62,7 @@ public class Task2 {
     }
 
     private static void printHelp() {
-        Map<Command, String> groupedCommands =
+        Map<Commands, String> groupedCommands =
                 commands.entrySet().stream().collect(Collectors.groupingBy(Map.Entry::getValue,
                         Collectors.mapping(Map.Entry::getKey, Collectors.joining(", "))));
 
